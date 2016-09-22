@@ -6,4 +6,5 @@
     <string name="api_access_token_not_set">Access Token Not Set</string>
 
     <!-- Survey Activity -->
+    <string name="survey_take_the_survey">Take the survey</string>
 </resources>

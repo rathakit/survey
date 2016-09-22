@@ -4,14 +4,57 @@
     android:id="@+id/activity_survey"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/colorBlack"
     tools:context="com.nimbl3.survey.views.SurveyActivity">
 
-    <TextView
+    <!-- Background -->
+    <ImageView android:id="@+id/bg_image_view"
+        android:scaleType="centerCrop"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!-- Dim -->
+    <View android:background="@color/colorBlackTransparent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!-- Name -->
+    <TextView android:id="@+id/name_text_view"
+        android:layout_marginTop="@dimen/survey_name_top_margin"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/xlarge_font_size"
+        android:textStyle="bold"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:layout_height="wrap_content" />
+
+    <!-- Description -->
+    <TextView android:id="@+id/desc_text_view"
+        android:layout_marginTop="@dimen/survey_desc_top_margin"
+        android:layout_below="@id/name_text_view"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/large_font_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <!-- Take a Survey -->
+    <TextView android:id="@+id/survey_button"
+        android:visibility="gone"
+        android:layout_marginBottom="@dimen/survey_take_survey_button_bottom_margin"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/large_font_size"
+        android:onClick="onSurvey"
+        android:background="@drawable/rounded_red_bg"
+        android:layout_alignParentBottom="true"
+        android:text="@string/survey_take_the_survey"
+        android:paddingBottom="@dimen/survey_take_survey_button_bottom_padding"
+        android:paddingTop="@dimen/survey_take_survey_button_top_padding"
+        android:paddingRight="@dimen/survey_take_survey_button_right_padding"
+        android:paddingLeft="@dimen/survey_take_survey_button_left_padding"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 </RelativeLayout>
