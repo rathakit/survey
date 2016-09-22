@@ -4,8 +4,11 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.nimbl3.survey.R;
@@ -34,8 +37,14 @@ public class SurveyActivity extends AppCompatActivity implements APIExecuteListe
     // The background image view
     private ImageView backgroundImageView;
 
+    // The bullets layout
+    private LinearLayout bulletsLayout;
+
     // The list of surveys
     private List<Survey> surveys;
+
+    // The bullets
+    private List<View> bullets;
 
     // The index of surveys
     private int index;
@@ -59,10 +68,12 @@ public class SurveyActivity extends AppCompatActivity implements APIExecuteListe
         nameTextView = (TextView) findViewById(R.id.name_text_view);
         descTextView = (TextView) findViewById(R.id.desc_text_view);
         surveyButton = (TextView) findViewById(R.id.survey_button);
+        bulletsLayout = (LinearLayout) findViewById(R.id.bullets_layout);
         backgroundImageView = (ImageView) findViewById(R.id.bg_image_view);
 
         // Initializes related objects.
         surveys = new ArrayList<>();
+        bullets = new ArrayList<>();
 
         // Start fetching the survey!
         fetchSurvey();
@@ -87,6 +98,12 @@ public class SurveyActivity extends AppCompatActivity implements APIExecuteListe
         // Adds all new.
         surveys.addAll(obj);
 
+        // Creates the bullet view.
+        createBulletView(surveys.size());
+
+        // Marks the current bullet.
+        markSurveyBullet(index, index);
+
         // Display the first.
         displaySurvey(surveys.get(index));
     }
@@ -102,8 +119,13 @@ public class SurveyActivity extends AppCompatActivity implements APIExecuteListe
      * Called when the survey button clicked.
      */
     public void onSurvey(View v) {
+        int fromIndex = index;
+
         // Moves next!
         index = index + 1 < surveys.size() ? ++index : index;
+
+        // Marks the current bullet.
+        markSurveyBullet(fromIndex, index);
 
         // Displays the first.
         displaySurvey(surveys.get(index));
@@ -142,5 +164,46 @@ public class SurveyActivity extends AppCompatActivity implements APIExecuteListe
         Picasso.with(this)
                 .load(survey.getCoverImageUrl())
                 .into(backgroundImageView);
+    }
+
+    /**
+     * Creates the bullets.
+     * @param count - the number of bullets
+     */
+    private void createBulletView(int count) {
+        // Clears all bullets
+        bullets.clear();
+        bulletsLayout.removeAllViews();
+
+        // Adds the bullets to the layout and puts them to array.
+        LayoutInflater inflater = getLayoutInflater();
+        for (int i = 0; i < count; i++) {
+            // Gets the main bullet view.
+            ViewGroup v = (ViewGroup) inflater.inflate(R.layout.bullet_view, null);
+
+            // Retrieves only the bullet view.
+            View bulletView = v.findViewById(R.id.bullet_view);
+
+            // Makes the child's view orphan.
+            v.removeAllViews();
+
+            // Adds to layout.
+            bulletsLayout.addView(bulletView);
+
+            // Puts to array.
+            bullets.add(bulletView);
+        }
+    }
+
+    /**
+     * Marks the current survey.
+     * @param fromIndex
+     * @param toIndex
+     */
+    private void markSurveyBullet(int fromIndex, int toIndex) {
+        View fromView = bullets.get(fromIndex);
+        View toView = bullets.get(toIndex);
+        fromView.setBackgroundResource(R.drawable.unselected_white_bullet);
+        toView.setBackgroundResource(R.drawable.selected_white_bullet);
     }
 }

@@ -20,6 +20,10 @@
     <dimen name="large_font_size">24sp</dimen>
     <dimen name="regular_font_size">16sp</dimen>
 
-    <!-- Custom Background -->
+    <!-- Others -->
     <dimen name="rounded_red_bg_radius">50dp</dimen>
+    <dimen name="white_bullet_stoke">1dp</dimen>
+    <dimen name="white_bullet_width">15dp</dimen>
+    <dimen name="white_bullet_height">15dp</dimen>
+    <dimen name="white_bullet_margin">5dp</dimen>
 </resources>
