@@ -2,6 +2,8 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <!-- Survey Activity -->
     <dimen name="survey_name_top_margin">100dp</dimen>
     <dimen name="survey_desc_top_margin">10dp</dimen>
     <dimen name="survey_take_survey_button_bottom_margin">60dp</dimen>
@@ -9,10 +11,15 @@
     <dimen name="survey_take_survey_button_right_padding">30dp</dimen>
     <dimen name="survey_take_survey_button_top_padding">15dp</dimen>
     <dimen name="survey_take_survey_button_bottom_padding">15dp</dimen>
-    <dimen name="rounded_red_bg_radius">50dp</dimen>
+
+    <!-- Toolbar -->
+    <dimen name="toolbar_button_padding">15dp</dimen>
 
     <!-- Font -->
     <dimen name="xlarge_font_size">36sp</dimen>
     <dimen name="large_font_size">24sp</dimen>
     <dimen name="regular_font_size">16sp</dimen>
+
+    <!-- Custom Background -->
+    <dimen name="rounded_red_bg_radius">50dp</dimen>
 </resources>

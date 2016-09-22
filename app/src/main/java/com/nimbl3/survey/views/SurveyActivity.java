@@ -1,7 +1,9 @@
 package com.nimbl3.survey.views;
 
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -42,6 +44,16 @@ public class SurveyActivity extends AppCompatActivity implements APIExecuteListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_survey);
+
+        // ActionBar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setPadding(0, 0, 0, 0);
+        toolbar.setContentInsetsAbsolute(0, 0);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayShowHomeEnabled(false);
+        actionBar.setDisplayShowCustomEnabled(true);
 
         // Initializes the view's components.
         nameTextView = (TextView) findViewById(R.id.name_text_view);
@@ -95,6 +107,13 @@ public class SurveyActivity extends AppCompatActivity implements APIExecuteListe
 
         // Displays the first.
         displaySurvey(surveys.get(index));
+    }
+
+    /**
+     * Called when the refresh button clicked.
+     */
+    public void onRefresh(View v) {
+        fetchSurvey();
     }
 
     /**

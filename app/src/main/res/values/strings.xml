@@ -5,6 +5,9 @@
     <string name="api_connector_not_set">APIConnector Not Set</string>
     <string name="api_access_token_not_set">Access Token Not Set</string>
 
+    <!-- ActionBar -->
+    <string name="action_bar_title_name">SURVEYS</string>
+
     <!-- Survey Activity -->
     <string name="survey_take_the_survey">Take the survey</string>
 </resources>
