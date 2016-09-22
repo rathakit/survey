@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Survey</string>
+
+    <!-- API -->
+    <string name="api_connector_not_set">APIConnector Not Set</string>
+    <string name="api_access_token_not_set">Access Token Not Set</string>
+
+    <!-- Survey Activity -->
 </resources>
