@@ -127,8 +127,8 @@ public class SurveyActivity extends AppCompatActivity implements APIExecuteListe
     public void onSurvey(View v) {
         int fromIndex = index;
 
-        // Moves next!
-        index = index + 1 < surveys.size() ? ++index : index;
+        // Moves next as recursive!
+        index = index + 1 < surveys.size() ? ++index : 0;
 
         // Marks the current bullet.
         markSurveyBullet(fromIndex, index);
