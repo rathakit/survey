@@ -11,11 +11,14 @@ import com.nimbl3.survey.utilities.Constant;
 import java.lang.reflect.Type;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Response;
+
 /**
  * Created by rathakit.nop on 9/22/2016 AD.
- * SurveyAPI - The class connects directly to the "app/surveys.json" API.
+ * SurveyAPIExecutor - The class connects directly to the "app/surveys.json" API.
  */
-public class SurveyAPI extends APIConnector {
+public class SurveyAPIExecutor extends APIConnector<List<Survey>> {
 
     // The access token
     private String accessToken = Constant.EMPTY_STRING;
@@ -24,7 +27,8 @@ public class SurveyAPI extends APIConnector {
      * Creates a survey API with access token provided.
      * @param accessToken
      */
-    public SurveyAPI(String accessToken) {
+    public SurveyAPIExecutor(APIExecuteListener listener, String accessToken) {
+        super(listener);
         this.accessToken = accessToken;
     }
 
@@ -33,9 +37,21 @@ public class SurveyAPI extends APIConnector {
      * Executes the API to communicate with server.
      */
     @Override
-    public void execute(APIExecutor executor) {
-        call = serviceAPI.getSurveyListAPI(accessToken);
-        call.enqueue(executor);
+    public void execute() {
+        // Ignored if being executed.
+        if (call != null && call.isExecuted()) {
+            return;
+        }
+
+        // Validates the request first.
+        Throwable t = validate();
+        if (t == null) {
+            // Make the execution if validation has been passed!
+            call = serviceAPI.getSurveyListAPI(accessToken);
+            call.enqueue(this);
+        } else if (listener != null) {
+            listener.onFailure(this, t);
+        }
     }
 
     @Override
@@ -59,5 +75,29 @@ public class SurveyAPI extends APIConnector {
             }
         }
         return t;
+    }
+
+    /**
+     * TODO Callback
+     * @param call
+     * @param response
+     */
+    @Override
+    public void onResponse(Call<List<Survey>> call, Response<List<Survey>> response) {
+        // Sets the call as null.
+        this.call = null;
+        if (listener != null) {
+            List<Survey> obj = response.body();
+            listener.onSuccess(this, obj);
+        }
+    }
+
+    @Override
+    public void onFailure(Call<List<Survey>> call, Throwable t) {
+        // Sets the call as null.
+        this.call = null;
+        if (listener != null) {
+            listener.onFailure(this, t);
+        }
     }
 }

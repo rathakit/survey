@@ -7,6 +7,7 @@ import com.nimbl3.survey.utilities.Util;
 import java.net.ConnectException;
 
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -14,7 +15,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by rathakit.nop on 9/22/2016 AD.
  * APIConnector - the abstract class that allows subclasses connect directly to the server APIs.
  */
-public abstract class APIConnector {
+public abstract class APIConnector<T> implements Callback<T> {
+
+    // The listener
+    protected APIExecuteListener<T> listener;
 
     // Retrofit
     protected Retrofit retrofit;
@@ -26,11 +30,14 @@ public abstract class APIConnector {
     protected Call call;
 
     // TODO Abstract Methods
-    public abstract void execute(APIExecutor executor);
+    public abstract void execute();
     protected abstract Gson getGsonConverter();
 
     // TODO Constructor
-    public APIConnector() {
+    public APIConnector(APIExecuteListener<T> listener) {
+        // Sets the listener.
+        this.listener = listener;
+
         // Initializes the Retrofit object.
         retrofit = new Retrofit.Builder()
                 .baseUrl(AppSettings.BASE_URL)
@@ -51,6 +58,14 @@ public abstract class APIConnector {
             t = new ConnectException();
         }
         return t;
+    }
+
+    /**
+     * Sets the APIExecuteListener.
+     * @param listener
+     */
+    public void setAPIExecuteListener(APIExecuteListener<T> listener) {
+        this.listener = listener;
     }
 
     /**

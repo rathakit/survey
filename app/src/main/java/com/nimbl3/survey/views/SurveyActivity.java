@@ -10,12 +10,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nimbl3.survey.R;
 import com.nimbl3.survey.apis.APIConnector;
 import com.nimbl3.survey.apis.APIExecuteListener;
-import com.nimbl3.survey.apis.APIExecutor;
-import com.nimbl3.survey.apis.SurveyAPI;
+import com.nimbl3.survey.apis.SurveyAPIExecutor;
 import com.nimbl3.survey.models.Survey;
 import com.nimbl3.survey.utilities.Constant;
 import com.squareup.picasso.Picasso;
@@ -45,6 +45,9 @@ public class SurveyActivity extends AppCompatActivity implements APIExecuteListe
 
     // The bullets
     private List<View> bullets;
+
+    // The SurveyAPIExecutor
+    private SurveyAPIExecutor surveyAPI;
 
     // The index of surveys
     private int index;
@@ -112,6 +115,9 @@ public class SurveyActivity extends AppCompatActivity implements APIExecuteListe
     public void onFailure(APIConnector connector, Throwable t) {
         // Hides the survey button.
         surveyButton.setVisibility(View.GONE);
+
+        // Shows error message.
+        Toast.makeText(this, t.getMessage(), Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -143,10 +149,9 @@ public class SurveyActivity extends AppCompatActivity implements APIExecuteListe
      * Fetches the survey from server.
      */
     private void fetchSurvey() {
-        SurveyAPI surveyAPI = new SurveyAPI(Constant.ACCESS_TOKEN);
-        APIExecutor executor = new APIExecutor();
-        executor.setAPIConnector(surveyAPI);
-        executor.execute(this);
+        if (surveyAPI == null)
+            surveyAPI = new SurveyAPIExecutor(this, Constant.ACCESS_TOKEN);
+        surveyAPI.execute();
     }
 
     /**
