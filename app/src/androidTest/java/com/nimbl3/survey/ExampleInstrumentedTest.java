@@ -8,6 +8,7 @@ import com.nimbl3.survey.apis.APIConnector;
 import com.nimbl3.survey.apis.APIExecuteListener;
 import com.nimbl3.survey.apis.SurveyAPIExecutor;
 import com.nimbl3.survey.models.Survey;
+import com.nimbl3.survey.models.SurveyParam;
 import com.nimbl3.survey.utilities.Constant;
 
 import org.junit.Test;
@@ -38,14 +39,17 @@ public class ExampleInstrumentedTest {
     public void testSurveyAPISuccess() throws Exception {
         int count = 1;
         final CountDownLatch signal = new CountDownLatch(count);
+        int page = 1;
+        final int perPage = 10;
+        SurveyParam param = new SurveyParam(Constant.ACCESS_TOKEN, page, perPage);
         SurveyAPIExecutor surveyAPIExecutor = new SurveyAPIExecutor(new APIExecuteListener<List<Survey>>() {
             @Override
             public void onSuccess(APIConnector connector, List<Survey> obj) {
                 // Checks APIConnector
                 assertTrue(connector instanceof SurveyAPIExecutor);
 
-                // Checks response's object.
-                assertTrue(obj instanceof List);
+                // Checks the total items received.
+                assertTrue(obj.size() == perPage);
 
                 // Countdown by one.
                 signal.countDown();
@@ -56,7 +60,7 @@ public class ExampleInstrumentedTest {
                 // Countdown by one.
                 signal.countDown();
             }
-        }, Constant.ACCESS_TOKEN);
+        }, param);
 
         // Execute!
         surveyAPIExecutor.execute();
@@ -70,6 +74,7 @@ public class ExampleInstrumentedTest {
     public void testSurveyAPIFailed() throws Exception {
         int count = 1;
         final CountDownLatch signal = new CountDownLatch(count);
+        SurveyParam param = new SurveyParam(null);
         SurveyAPIExecutor surveyAPIExecutor = new SurveyAPIExecutor(new APIExecuteListener<List<Survey>>() {
             @Override
             public void onSuccess(APIConnector connector, List<Survey> obj) {
@@ -92,7 +97,7 @@ public class ExampleInstrumentedTest {
                 // Countdown by one.
                 signal.countDown();
             }
-        }, "");
+        }, param);
 
         // Execute!
         surveyAPIExecutor.execute();

@@ -63,12 +63,19 @@
         layout="@layout/toolbar" />
 
     <!-- Bullets -->
-    <LinearLayout android:id="@+id/bullets_layout"
-        android:gravity="center"
-        android:layout_below="@id/toolbar"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+    <ScrollView android:layout_below="@id/toolbar"
+        android:layout_marginTop="@dimen/survey_bullet_layout_top_margin"
+        android:layout_marginBottom="@dimen/survey_bullet_layout_bottom_margin"
+        android:id="@+id/bullet_scroll_view"
         android:layout_alignParentRight="true"
-        android:orientation="vertical">
-    </LinearLayout>
+        android:fillViewport="true"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+        <LinearLayout android:id="@+id/bullets_layout"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+        </LinearLayout>
+    </ScrollView>
 </RelativeLayout>

@@ -1,6 +1,8 @@
 package com.nimbl3.survey.apis;
 
 import com.google.gson.Gson;
+import com.nimbl3.survey.models.BasedParam;
+import com.nimbl3.survey.models.SurveyParam;
 import com.nimbl3.survey.utilities.AppSettings;
 import com.nimbl3.survey.utilities.Util;
 
@@ -29,14 +31,18 @@ public abstract class APIConnector<T> implements Callback<T> {
     // The call object
     protected Call call;
 
+    // The parameters
+    protected BasedParam param;
+
     // TODO Abstract Methods
     public abstract void execute();
     protected abstract Gson getGsonConverter();
 
     // TODO Constructor
-    public APIConnector(APIExecuteListener<T> listener) {
-        // Sets the listener.
+    public APIConnector(APIExecuteListener<T> listener, BasedParam param) {
+        // Sets the listener & parameters.
         this.listener = listener;
+        this.param = param;
 
         // Initializes the Retrofit object.
         retrofit = new Retrofit.Builder()
@@ -66,6 +72,14 @@ public abstract class APIConnector<T> implements Callback<T> {
      */
     public void setAPIExecuteListener(APIExecuteListener<T> listener) {
         this.listener = listener;
+    }
+
+    /**
+     * Sets the parameters.
+     * @param param
+     */
+    public void setParam(BasedParam param) {
+        this.param = param;
     }
 
     /**

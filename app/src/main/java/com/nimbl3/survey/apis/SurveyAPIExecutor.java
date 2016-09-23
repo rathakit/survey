@@ -6,7 +6,7 @@ import com.google.gson.reflect.TypeToken;
 import com.nimbl3.survey.App;
 import com.nimbl3.survey.R;
 import com.nimbl3.survey.models.Survey;
-import com.nimbl3.survey.utilities.Constant;
+import com.nimbl3.survey.models.SurveyParam;
 
 import java.lang.reflect.Type;
 import java.util.List;
@@ -20,16 +20,12 @@ import retrofit2.Response;
  */
 public class SurveyAPIExecutor extends APIConnector<List<Survey>> {
 
-    // The access token
-    private String accessToken = Constant.EMPTY_STRING;
-
     /** TODO Constructor
      * Creates a survey API with access token provided.
-     * @param accessToken
+     * @param param
      */
-    public SurveyAPIExecutor(APIExecuteListener listener, String accessToken) {
-        super(listener);
-        this.accessToken = accessToken;
+    public SurveyAPIExecutor(APIExecuteListener listener, SurveyParam param) {
+        super(listener, param);
     }
 
     /**
@@ -47,7 +43,10 @@ public class SurveyAPIExecutor extends APIConnector<List<Survey>> {
         Throwable t = validate();
         if (t == null) {
             // Make the execution if validation has been passed!
-            call = serviceAPI.getSurveyListAPI(accessToken);
+            SurveyParam p = (SurveyParam) param;
+            String page = p.getPage() > 0 ? String.valueOf(p.getPage()) : "";
+            String perPage = p.getPerPage() > 0 ? String.valueOf(p.getPerPage()) : "";
+            call = serviceAPI.getSurveyListAPI(param.getAccessToken(), page, perPage);
             call.enqueue(this);
         } else if (listener != null) {
             listener.onFailure(this, t);
@@ -70,6 +69,7 @@ public class SurveyAPIExecutor extends APIConnector<List<Survey>> {
     public Throwable validate() {
         Throwable t = super.validate();
         if (t == null) {
+            String accessToken = param.getAccessToken();
             if (accessToken == null || accessToken.trim().length() == 0) {
                 t = new IllegalArgumentException(App.getContext().getString(R.string.api_access_token_not_set));
             }

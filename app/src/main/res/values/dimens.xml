@@ -11,6 +11,8 @@
     <dimen name="survey_take_survey_button_right_padding">30dp</dimen>
     <dimen name="survey_take_survey_button_top_padding">15dp</dimen>
     <dimen name="survey_take_survey_button_bottom_padding">15dp</dimen>
+    <dimen name="survey_bullet_layout_top_margin">5dp</dimen>
+    <dimen name="survey_bullet_layout_bottom_margin">5dp</dimen>
 
     <!-- Toolbar -->
     <dimen name="toolbar_button_padding">15dp</dimen>

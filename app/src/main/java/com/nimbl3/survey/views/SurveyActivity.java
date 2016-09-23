@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,9 +18,11 @@ import com.nimbl3.survey.apis.APIConnector;
 import com.nimbl3.survey.apis.APIExecuteListener;
 import com.nimbl3.survey.apis.SurveyAPIExecutor;
 import com.nimbl3.survey.models.Survey;
+import com.nimbl3.survey.models.SurveyParam;
 import com.nimbl3.survey.utilities.Constant;
 import com.squareup.picasso.Picasso;
 
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +39,9 @@ public class SurveyActivity extends AppCompatActivity implements APIExecuteListe
 
     // The background image view
     private ImageView backgroundImageView;
+
+    // The bullet scroll view.
+    private ScrollView bulletScrollView;
 
     // The bullets layout
     private LinearLayout bulletsLayout;
@@ -72,14 +78,15 @@ public class SurveyActivity extends AppCompatActivity implements APIExecuteListe
         descTextView = (TextView) findViewById(R.id.desc_text_view);
         surveyButton = (TextView) findViewById(R.id.survey_button);
         bulletsLayout = (LinearLayout) findViewById(R.id.bullets_layout);
+        bulletScrollView = (ScrollView) findViewById(R.id.bullet_scroll_view);
         backgroundImageView = (ImageView) findViewById(R.id.bg_image_view);
 
         // Initializes related objects.
         surveys = new ArrayList<>();
         bullets = new ArrayList<>();
 
-        // Start fetching the survey!
-        fetchSurvey();
+        // Start fetching!
+        getAllFreshSurveys();
     }
 
     /**
@@ -113,8 +120,12 @@ public class SurveyActivity extends AppCompatActivity implements APIExecuteListe
 
     @Override
     public void onFailure(APIConnector connector, Throwable t) {
-        // Hides the survey button.
-        surveyButton.setVisibility(View.GONE);
+        // Timeout? Gets only the first ten items.
+        if (t instanceof SocketTimeoutException) {
+            int page = 1;
+            int perPage = 10;
+            fetchSurvey(page, perPage);
+        }
 
         // Shows error message.
         Toast.makeText(this, t.getMessage(), Toast.LENGTH_SHORT).show();
@@ -141,17 +152,30 @@ public class SurveyActivity extends AppCompatActivity implements APIExecuteListe
      * Called when the refresh button clicked.
      */
     public void onRefresh(View v) {
-        fetchSurvey();
+        getAllFreshSurveys();
     }
 
     /**
      * TODO Private Methods
      * Fetches the survey from server.
      */
-    private void fetchSurvey() {
-        if (surveyAPI == null)
-            surveyAPI = new SurveyAPIExecutor(this, Constant.ACCESS_TOKEN);
+    private void fetchSurvey(int page, int perPage) {
+        SurveyParam param = new SurveyParam(Constant.ACCESS_TOKEN, page, perPage);
+        if (surveyAPI == null) {
+            surveyAPI = new SurveyAPIExecutor(this, param);
+        } else {
+            surveyAPI.setParam(param);
+        }
         surveyAPI.execute();
+    }
+
+    /**
+     * Gets all fresh surveys
+     */
+    private void getAllFreshSurveys() {
+        int page = 0;
+        int perPage = 0;
+        fetchSurvey(page, perPage);
     }
 
     /**
@@ -210,5 +234,17 @@ public class SurveyActivity extends AppCompatActivity implements APIExecuteListe
         View toView = bullets.get(toIndex);
         fromView.setBackgroundResource(R.drawable.unselected_white_bullet);
         toView.setBackgroundResource(R.drawable.selected_white_bullet);
+
+        // Scroll to the position marked!
+        int dimension = 2;
+        int loc[] = new int[dimension];
+
+        // Retrieves the position x, y of the marked view.
+        toView.getLocationOnScreen(loc);
+        int x = 0;
+        int y = toIndex == 0 ? 0 : loc[1];
+
+        // Scroll to the position.
+        bulletScrollView.smoothScrollTo(x, y);
     }
 }

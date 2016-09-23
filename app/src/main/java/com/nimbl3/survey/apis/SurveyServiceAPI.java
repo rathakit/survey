@@ -16,5 +16,7 @@ public interface SurveyServiceAPI {
 
     // Gets the list of surveys
     @GET("app/surveys.json")
-    Call<List<Survey>> getSurveyListAPI(@Query("access_token") String accessToken);
+    Call<List<Survey>> getSurveyListAPI(@Query("access_token") String accessToken,
+                                        @Query("page") String page,
+                                        @Query("per_page") String perPage);
 }
