@@ -1,6 +1,32 @@
 <resources>
     <!-- Example customization of dimensions originally defined in res/values/dimens.xml
-         (such as screen margins) for screens with more than 820dp of available width. This
-         would include 7" and 10" devices in landscape (~960dp and ~1280dp respectively). -->
+     (such as screen margins) for screens with more than 820dp of available width. This
+     would include 7" and 10" devices in landscape (~960dp and ~1280dp respectively). -->
     <dimen name="activity_horizontal_margin">64dp</dimen>
+    <dimen name="activity_vertical_margin">32dp</dimen>
+
+    <!-- Survey Activity -->
+    <dimen name="survey_name_top_margin">200dp</dimen>
+    <dimen name="survey_desc_top_margin">20dp</dimen>
+    <dimen name="survey_take_survey_button_bottom_margin">120dp</dimen>
+    <dimen name="survey_take_survey_button_left_padding">60dp</dimen>
+    <dimen name="survey_take_survey_button_right_padding">60dp</dimen>
+    <dimen name="survey_take_survey_button_top_padding">30dp</dimen>
+    <dimen name="survey_take_survey_button_bottom_padding">30dp</dimen>
+
+    <!-- Toolbar -->
+    <dimen name="toolbar_button_padding">30dp</dimen>
+
+    <!-- Font -->
+    <dimen name="xlarge_font_size">72sp</dimen>
+    <dimen name="large_font_size">48sp</dimen>
+    <dimen name="regular_font_size">32sp</dimen>
+
+    <!-- Others -->
+    <dimen name="rounded_red_bg_radius">100dp</dimen>
+    <dimen name="white_bullet_stoke">2dp</dimen>
+    <dimen name="white_bullet_width">30dp</dimen>
+    <dimen name="white_bullet_height">30dp</dimen>
+    <dimen name="white_bullet_margin">10dp</dimen>
 </resources>
+
