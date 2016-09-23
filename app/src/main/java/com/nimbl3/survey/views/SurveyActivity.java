@@ -167,7 +167,7 @@ public class SurveyActivity extends AppCompatActivity implements APIExecuteListe
 
         // Background
         Picasso.with(this)
-                .load(survey.getCoverImageUrl())
+                .load(survey.getHighResolutionImageUrl())
                 .into(backgroundImageView);
     }
 

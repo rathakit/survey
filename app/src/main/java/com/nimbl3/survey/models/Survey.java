@@ -52,4 +52,13 @@ public class Survey {
     public void setCoverImageUrl(String coverImageUrl) {
         this.coverImageUrl = coverImageUrl;
     }
+
+    /**
+     * TODO Public Methods
+     * Gets the high resolution image url.
+     * @return
+     */
+    public String getHighResolutionImageUrl() {
+        return coverImageUrl + Constant.HIGH_RESOLUTION_IMAGE_APPEND_CHAR;
+    }
 }
