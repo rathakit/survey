@@ -27,3 +27,7 @@
 
 # Picasso
 -dontwarn com.squareup.okhttp.**
+
+# Fixes the warning of "Ignoring InnerClasses attribute for an anonymous inner class
+# that doesn't come with an associated EnclosingMethod attribute." while using Proguard.
+-keepattributes EnclosingMethod
