@@ -26,25 +26,29 @@ import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 public class SurveyActivity extends AppCompatActivity implements APIExecuteListener<List<Survey>> {
 
     // The name text view
-    private TextView nameTextView;
+    @BindView(R.id.name_text_view) TextView nameTextView;
 
     // The description text view
-    private TextView descTextView;
+    @BindView(R.id.desc_text_view) TextView descTextView;
 
     // The survey button
-    private TextView surveyButton;
+    @BindView(R.id.survey_button) TextView surveyButton;
 
     // The background image view
-    private ImageView backgroundImageView;
+    @BindView(R.id.bg_image_view) ImageView backgroundImageView;
 
     // The bullet scroll view.
-    private ScrollView bulletScrollView;
+    @BindView(R.id.bullet_scroll_view) ScrollView bulletScrollView;
 
     // The bullets layout
-    private LinearLayout bulletsLayout;
+    @BindView(R.id.bullets_layout) LinearLayout bulletsLayout;
 
     // The list of surveys
     private List<Survey> surveys;
@@ -63,6 +67,9 @@ public class SurveyActivity extends AppCompatActivity implements APIExecuteListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_survey);
 
+        // ButterKnife Binding
+        ButterKnife.bind(this);
+
         // ActionBar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setPadding(0, 0, 0, 0);
@@ -72,14 +79,6 @@ public class SurveyActivity extends AppCompatActivity implements APIExecuteListe
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayShowHomeEnabled(false);
         actionBar.setDisplayShowCustomEnabled(true);
-
-        // Initializes the view's components.
-        nameTextView = (TextView) findViewById(R.id.name_text_view);
-        descTextView = (TextView) findViewById(R.id.desc_text_view);
-        surveyButton = (TextView) findViewById(R.id.survey_button);
-        bulletsLayout = (LinearLayout) findViewById(R.id.bullets_layout);
-        bulletScrollView = (ScrollView) findViewById(R.id.bullet_scroll_view);
-        backgroundImageView = (ImageView) findViewById(R.id.bg_image_view);
 
         // Initializes related objects.
         surveys = new ArrayList<>();
@@ -135,6 +134,7 @@ public class SurveyActivity extends AppCompatActivity implements APIExecuteListe
      * TODO UI's Methods
      * Called when the survey button clicked.
      */
+    @OnClick(R.id.survey_button)
     public void onSurvey(View v) {
         int fromIndex = index;
 
@@ -151,6 +151,7 @@ public class SurveyActivity extends AppCompatActivity implements APIExecuteListe
     /**
      * Called when the refresh button clicked.
      */
+    @OnClick(R.id.refresh_button)
     public void onRefresh(View v) {
         getAllFreshSurveys();
     }

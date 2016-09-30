@@ -47,7 +47,6 @@
         android:layout_centerHorizontal="true"
         android:textColor="@color/colorWhite"
         android:textSize="@dimen/large_font_size"
-        android:onClick="onSurvey"
         android:background="@drawable/rounded_red_bg"
         android:layout_alignParentBottom="true"
         android:text="@string/survey_take_the_survey"

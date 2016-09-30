@@ -28,6 +28,17 @@
 # Picasso
 -dontwarn com.squareup.okhttp.**
 
+####### [ButterKnife - START] ######
+# Retain generated class which implement Unbinder.
+-keep public class * implements butterknife.Unbinder { public <init>(...); }
+
+# Prevent obfuscation of types which use ButterKnife annotations since the simple name
+# is used to reflectively look up the generated ViewBinding.
+-keep class butterknife.*
+-keepclasseswithmembernames class * { @butterknife.* <methods>; }
+-keepclasseswithmembernames class * { @butterknife.* <fields>; }
+####### [ButterKnife - END] ######
+
 # Fixes the warning of "Ignoring InnerClasses attribute for an anonymous inner class
 # that doesn't come with an associated EnclosingMethod attribute." while using Proguard.
 -keepattributes EnclosingMethod

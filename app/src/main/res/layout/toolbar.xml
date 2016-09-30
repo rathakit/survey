@@ -8,10 +8,10 @@
     android:background="@color/colorBlack">
 
     <!-- Refresh Button -->
-    <ImageButton android:src="@drawable/refresh"
+    <ImageButton android:id="@+id/refresh_button"
+        android:src="@drawable/refresh"
         android:layout_gravity="left"
         android:background="@null"
-        android:onClick="onRefresh"
         android:padding="@dimen/toolbar_button_padding"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
