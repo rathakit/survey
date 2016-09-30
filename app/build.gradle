@@ -17,6 +17,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    productFlavors {
+        production {
+            buildConfigField 'String', 'HOST', '"https://www-staging.usay.co/"'
+        }
+        develepment {
+            buildConfigField 'String', 'HOST', '"https://www-staging.usay.co/"';
+        }
+    }
 }
 
 dependencies {

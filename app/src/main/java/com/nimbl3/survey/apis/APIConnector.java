@@ -1,9 +1,8 @@
 package com.nimbl3.survey.apis;
 
 import com.google.gson.Gson;
+import com.nimbl3.survey.BuildConfig;
 import com.nimbl3.survey.models.BasedParam;
-import com.nimbl3.survey.models.SurveyParam;
-import com.nimbl3.survey.utilities.AppSettings;
 import com.nimbl3.survey.utilities.Util;
 
 import java.net.ConnectException;
@@ -46,7 +45,7 @@ public abstract class APIConnector<T> implements Callback<T> {
 
         // Initializes the Retrofit object.
         retrofit = new Retrofit.Builder()
-                .baseUrl(AppSettings.BASE_URL)
+                .baseUrl(BuildConfig.HOST)
                 .addConverterFactory(GsonConverterFactory.create(getGsonConverter()))
                 .build();
 
